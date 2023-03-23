@@ -28,11 +28,19 @@ function App() {
     setHouseFilter(value);
   };
 
+  const [search, setSearch]= useState('');
+
+  const setSearchName = (value)=>{
+    setSearch(value)
+  }
   const characterFiltered = characterList.filter((eachCharacter) =>
     
      houseFilter.toLowerCase() === eachCharacter.house.toLowerCase()
     
+  ).filter((eachCharacter) =>
+     eachCharacter.name.includes(search)
   )
+       
   console.log(characterFiltered);
   const {pathname} = useLocation()
   
@@ -42,6 +50,9 @@ function App() {
   const characterId = dataUrl !== null? dataUrl.params.id : null
 
   const characterFind = characterFiltered.find((eachCharacter)=>eachCharacter.id === characterId)
+  
+
+ 
   return(
     <>
        <h1 className='title--big'>Harry Potter</h1>
@@ -51,7 +62,8 @@ function App() {
              <Route 
                path="/" element={ 
                  <> 
-                   <Filters handleFilterHouse ={handleFilterHouse}/>
+                  
+                   <Filters handleFilterHouse ={handleFilterHouse} setSearchName={setSearchName} search={search}/>
                    <CharacterList characterList={characterFiltered}/>
                  </>
                }
