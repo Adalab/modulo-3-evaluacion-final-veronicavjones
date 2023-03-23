@@ -4,8 +4,10 @@
 // - Nuestros
 // - Sass
 import { useEffect, useState } from 'react';
+import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import getDataApi from '../services/api';
 import '../styles/App.scss';
+import CharacterDetail from './CharacterDetail';
 import CharacterList from './CharacterList';
 import Filters from './Filters';
 // - Imágenes
@@ -32,15 +34,35 @@ function App() {
     
   )
   console.log(characterFiltered);
+  const {pathname} = useLocation()
+  
+  const dataUrl = matchPath('/character/:id', pathname);
+  
+
+  const characterId = dataUrl !== null? dataUrl.params.id : null
+
+  const characterFind = characterFiltered.find((eachCharacter)=>eachCharacter.id === characterId)
   return(
     <>
-      <h1 className='title--big'>Harry Potter</h1>
+       <h1 className='title--big'>Harry Potter</h1>
          <main className='main'>
-           <Filters handleFilterHouse ={handleFilterHouse}/>
-           <CharacterList characterList={characterFiltered}/>
+            <Routes>
+             
+             <Route 
+               path="/" element={ 
+                 <> 
+                   <Filters handleFilterHouse ={handleFilterHouse}/>
+                   <CharacterList characterList={characterFiltered}/>
+                 </>
+               }
+             ></Route>
+             <Route path='/character/:id' element= {<CharacterDetail characterFind={characterFind}/>}/>
+           </Routes>  
+           
+           
            
          </main> 
-    </>
+   </>
   );
   }  
  
