@@ -38,7 +38,7 @@ function App() {
      houseFilter.toLowerCase() === eachCharacter.house.toLowerCase()
     
   ).filter((eachCharacter) =>
-     eachCharacter.name.includes(search)
+     eachCharacter.name.toLowerCase().includes(search)
   )
        
   console.log(characterFiltered);

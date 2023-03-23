@@ -1,3 +1,5 @@
+import user from '../images/user.png';
+
 const getDataApi = () =>{
     return fetch('https://hp-api.onrender.com/api/characters')
     .then((response)=> response.json())
@@ -6,9 +8,12 @@ const getDataApi = () =>{
             return {
                 name: eachCharacter.name,
                 species: eachCharacter.species,
-                image: eachCharacter.image,
+                image: eachCharacter.image || user,
                 id: eachCharacter.id,
                 house: eachCharacter.house,
+                status: eachCharacter.alive,
+                gender: eachCharacter.gender,
+                
 
             };
         });
